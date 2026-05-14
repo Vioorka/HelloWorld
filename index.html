@@ -3,164 +3,280 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ERGOPROXY - Aleksander Grzybowski. Profesjonalne doradztwo w zakresie efektywności energetycznej.">
   <title>ERGOPROXY - Aleksander Grzybowski</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+
   <style>
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.12);
+      --glass-border: rgba(255, 255, 255, 0.25);
+      --accent-color: #ffffff;
+      --transition-speed: 0.3s;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
-      font-family: Arial, sans-serif;
-    }
-    body {
-      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #000;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
-    .language-toggle {
-      position: absolute;
-      top: 10px;
-      right: 10px;
+
+    /* Oryginalne tło z subtelną animacją Ken Burns */
+    .bg-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+      background-size: cover;
+      animation: kenBurns 30s infinite alternate ease-in-out;
     }
+
+    @keyframes kenBurns {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+
     .overlay {
-      padding: 5vw;
+      position: relative;
+      z-index: 10; 
+      padding: 30px 40px;
       width: 90%;
-      max-width: 800px;
+      max-width: 550px;
       box-sizing: border-box;
       text-align: center;
-      border-radius: 10px;
+      border-radius: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    h1 {
-      font-size: 5vw;
-      margin: 0;
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.98) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
-    p {
-      font-size: 1.5vw;
-      margin: 10px 0;
+
+    .language-toggle {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      z-index: 20;
     }
-    .contact, .about {
-      margin-top: 30px;
-      font-size: 1.2vw;
-      line-height: 1.6;
-      background: none;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+
+    h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+    #main-subtitle { font-size: 1.1rem; margin: 8px 0 25px 0; font-weight: 300; opacity: 0.9; letter-spacing: 1px; }
+
+    /* Płynne przejścia sekcji */
+    .content-section {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-in-out, opacity 0.4s ease;
+      opacity: 0;
     }
-    .contact-section, .about-section {
-      display: none;
+
+    .content-section.show {
+      max-height: 1000px;
+      opacity: 1;
       margin-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 20px;
     }
-    .show-contact, .show-about {
-      display: block;
+
+    .details-box { font-size: 1rem; line-height: 1.6; }
+    
+    .offer-list { 
+      list-style: none; 
+      padding: 0; 
+      margin: 15px 0; 
+      text-align: left; 
+      display: inline-block; 
+      width: 100%;
     }
+
+    .offer-list li { 
+      margin-bottom: 14px; 
+      padding-left: 30px; 
+      position: relative; 
+      text-align: justify; 
+      font-weight: 500;
+    }
+
+    .offer-list li::before { 
+      content: '✓'; 
+      position: absolute; 
+      left: 0; 
+      color: #adff2f; 
+      font-weight: 900; 
+    }
+
+    /* Przyciski */
     button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1.2vw;
+      margin: 6px;
+      padding: 12px 24px;
+      font-size: 0.95rem;
       border: none;
-      border-radius: 5px;
-      background-color: #ffffffcc;
-      color: #333;
+      border-radius: 25px;
+      background-color: var(--accent-color);
+      color: #222;
       cursor: pointer;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      transition: all var(--transition-speed) ease;
+      font-weight: 600;
     }
-    button:hover {
-      background-color: #ffffffee;
+
+    button:hover { 
+      transform: translateY(-2px); 
+      background-color: #fff;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); 
     }
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-      p, .contact, .about, button {
-        font-size: 1rem;
-      }
+
+    .btn-vcard { 
+      background-color: transparent; 
+      color: white; 
+      border: 1.5px solid white; 
+      margin-top: 20px; 
+      font-size: 0.85rem; 
     }
-    @media (max-width: 480px) {
-      .overlay {
-        padding: 20px;
-      }
-      h1 {
-        font-size: 1.8rem;
-      }
-      p, .contact, .about, button {
-        font-size: 0.95rem;
-      }
+    
+    .btn-vcard:hover {
+      background-color: white;
+      color: #222;
+    }
+
+    a { color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); transition: border var(--transition-speed); }
+    a:hover { border-bottom: 1px solid white; }
+
+    @media (max-width: 480px) { 
+      .overlay { padding: 25px 20px; width: 92%; } 
+      button { width: 100%; margin: 5px 0; }
+      .contact-details p { margin: 12px 0; font-size: 0.9rem; }
+      small { display: block; line-height: 1.4; margin-top: 5px; }
     }
   </style>
-  <script>
-    function toggleContact() {
-      const section = document.getElementById('contact-section');
-      section.classList.toggle('show-contact');
-    }
-    function toggleAbout() {
-      const section = document.getElementById('about-section');
-      section.classList.toggle('show-about');
-    }
-    function toggleLanguage() {
-      const plTexts = {
-        title: "ERGOPROXY",
-        subtitle: "Efektywność energetyczna",
-        aboutBtn: "O firmie",
-        about1: "Efektywność energetyczna to nie tylko sposób na zmniejszenie kosztów operacyjnych, ale również realny wkład w ochronę środowiska. W ERGOPROXY wierzymy, że nowoczesne podejście do zużycia energii może iść w parze z troską o naszą planetę.",
-        about2: "Poprzez racjonalne zarządzanie zasobami i wdrażanie sprawdzonych rozwiązań pomagamy naszym klientom nie tylko oszczędzać, ale także działać odpowiedzialnie. Warto inwestować w efektywność – dla siebie i przyszłych pokoleń.",
-        contactBtn: "Kontakt"
-      };
-      const enTexts = {
-        title: "ERGOPROXY",
-        subtitle: "Energy Efficiency",
-        aboutBtn: "About Us",
-        about1: "Energy efficiency is not only a way to reduce operating costs, but also a real contribution to environmental protection. At ERGOPROXY, we believe that a modern approach to energy use can go hand in hand with caring for our planet.",
-        about2: "Through rational resource management and proven solutions, we help our clients not only save money but also act responsibly. It's worth investing in efficiency – for ourselves and future generations.",
-        contactBtn: "Contact"
-      };
-      const currentLang = document.documentElement.lang;
-      const newLang = currentLang === 'pl' ? 'en' : 'pl';
-      const t = newLang === 'pl' ? plTexts : enTexts;
-
-      document.documentElement.lang = newLang;
-      document.getElementById('main-title').innerText = t.title;
-      document.getElementById('main-subtitle').innerText = t.subtitle;
-      document.getElementById('about-btn').innerText = t.aboutBtn;
-      document.getElementById('about1').innerText = t.about1;
-      document.getElementById('about2').innerText = t.about2;
-      document.getElementById('contact-btn').innerText = t.contactBtn;
-    }
-  </script>
 </head>
 <body>
+
+  <div class="bg-container"></div>
+
   <div class="language-toggle">
-    <button onclick="toggleLanguage()">PL/EN</button>
+    <button onclick="toggleLanguage()" style="padding: 8px 15px; font-size: 0.8rem;">PL / EN</button>
   </div>
+
   <div class="overlay">
     <h1 id="main-title">ERGOPROXY</h1>
     <p id="main-subtitle">Efektywność energetyczna</p>
 
-    <button id="about-btn" onclick="toggleAbout()">O firmie</button>
-    <div id="about-section" class="about-section">
-      <div class="about">
+    <div class="nav-buttons">
+      <button id="about-btn" onclick="toggleSection('about-section')">O firmie</button>
+      <button id="offer-btn" onclick="toggleSection('offer-section')">Oferta</button>
+      <button id="contact-btn" onclick="toggleSection('contact-section')">Kontakt</button>
+    </div>
+
+    <div id="about-section" class="content-section">
+      <div class="details-box">
         <p id="about1">Efektywność energetyczna to nie tylko sposób na zmniejszenie kosztów operacyjnych, ale również realny wkład w ochronę środowiska. W ERGOPROXY wierzymy, że nowoczesne podejście do zużycia energii może iść w parze z troską o naszą planetę.</p>
-        <p id="about2">Poprzez racjonalne zarządzanie zasobami i wdrażanie sprawdzonych rozwiązań pomagamy naszym klientom nie tylko oszczędzać, ale także działać odpowiedzialnie. Warto inwestować w efektywność – dla siebie i przyszłych pokoleń.</p>
+        <p id="about2">Poprzez racjonalne zarządzanie zasobami i wdrażanie sprawdzonych rozwiązań pomagamy naszym klientom nie tylko oszczędzać, ale także działać odpowiedzialnie.</p>
       </div>
     </div>
 
-    <button id="contact-btn" onclick="toggleContact()">Kontakt</button>
-    <div id="contact-section" class="contact-section">
-      <div class="contact">
+    <div id="offer-section" class="content-section">
+      <div class="details-box">
+        <ul class="offer-list" id="offer-list">
+          <li>Analiza, projektowanie i optymalizacja systemów energetycznych</li>
+          <li>Redukcja kosztów operacyjnych i zwiększenie wydajności systemów</li>
+          <li>Wsparcie inżynierskie na etapie projektowania i wdrożeń</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="contact-section" class="content-section">
+      <div class="details-box contact-details">
         <p><strong>Ergoproxy Aleksander Grzybowski</strong></p>
-        <p>agrzybowski@ergoproxy.com.pl</p>
-        <p>+48 512 293 163</p>
-        <p>ul. Joachima Lelewela 17</p>
-        <p>41-711 Ruda Śląska</p>
-        <p>NIP: 6412300559</p>
-        <p>REGON: 542060896</p>
-        <p>D-U-N-S: 665806581</p>
+        <p><a href="mailto:agrzybowski@ergoproxy.com.pl">agrzybowski@ergoproxy.com.pl</a></p>
+        <p><a href="tel:+48512293163">+48 512 293 163</a></p>
+        <p><small>ul. Joachima Lelewela 17, 41-711 Ruda Śląska</small></p>
+        <p><small>NIP: 6412300559 | REGON: 542060896</small></p>
+        <p><small>D-U-N-S: 665806581</small></p>
+        <button class="btn-vcard" onclick="downloadVCard()" id="vcard-btn">⬇ Dodaj do kontaktów</button>
       </div>
     </div>
   </div>
+
+  <script>
+    // Funkcja przełączania widoczności sekcji
+    function toggleSection(id) {
+      const sections = document.querySelectorAll('.content-section');
+      sections.forEach(s => {
+        if (s.id === id) s.classList.toggle('show');
+        else s.classList.remove('show');
+      });
+    }
+
+    // Funkcja generowania i pobierania wizytówki vCard
+    function downloadVCard() {
+      const vcard = "BEGIN:VCARD\nVERSION:3.0\nFN:Aleksander Grzybowski (ERGOPROXY)\nORG:ERGOPROXY\nTEL:+48512293163\nEMAIL:agrzybowski@ergoproxy.com.pl\nADR:;;ul. Joachima Lelewela 17;Ruda Śląska;;41-711;Poland\nEND:VCARD";
+      const blob = new Blob([vcard], { type: "text/vcard" });
+      const url = window.URL.createObjectURL(blob);
+      const newLink = document.createElement("a");
+      newLink.href = url;
+      newLink.setAttribute("download", "Aleksander_Grzybowski_ERGOPROXY.vcf");
+      newLink.click();
+    }
+
+    // Funkcja zmiany języka
+    function toggleLanguage() {
+      const pl = {
+        subtitle: "Efektywność energetyczna", aboutBtn: "O firmie", offerBtn: "Oferta", contactBtn: "Kontakt",
+        about1: "Efektywność energetyczna to nie tylko sposób na zmniejszenie kosztów operacyjnych, ale również realny wkład w ochronę środowiska. W ERGOPROXY wierzymy, że nowoczesne podejście do zużycia energii może iść w parze z troską o naszą planetę.",
+        about2: "Poprzez racjonalne zarządzanie zasobami i wdrażanie sprawdzonych rozwiązań pomagamy naszym klientom nie tylko oszczędzać, ale także działać odpowiedzialnie.",
+        offers: ["Analiza, projektowanie i optymalizacja systemów energetycznych", "Redukcja kosztów operacyjnych i zwiększenie wydajności systemów", "Wsparcie inżynierskie na etapie projektowania i wdrożeń"],
+        vcardBtn: "⬇ Dodaj do kontaktów"
+      };
+      const en = {
+        subtitle: "Energy Efficiency", aboutBtn: "About Us", offerBtn: "Services", contactBtn: "Contact",
+        about1: "Energy efficiency is not only a way to reduce operating costs, but also a real contribution to environmental protection. At ERGOPROXY, we believe that modern energy use goes hand in hand with planet care.",
+        about2: "Through rational resource management and proven solutions, we help our clients not only save, but also act responsibly.",
+        offers: ["Analysis, design and optimization of energy systems", "Reduction of operating costs and increasing system efficiency", "Engineering support at the design and implementation stage"],
+        vcardBtn: "⬇ Add to Contacts"
+      };
+
+      const currentLang = document.documentElement.lang;
+      const newLang = currentLang === 'pl' ? 'en' : 'pl';
+      const t = newLang === 'pl' ? pl : en;
+
+      document.documentElement.lang = newLang;
+      document.getElementById('main-subtitle').innerText = t.subtitle;
+      document.getElementById('about-btn').innerText = t.aboutBtn;
+      document.getElementById('offer-btn').innerText = t.offerBtn;
+      document.getElementById('contact-btn').innerText = t.contactBtn;
+      document.getElementById('about1').innerText = t.about1;
+      document.getElementById('about2').innerText = t.about2;
+      document.getElementById('vcard-btn').innerText = t.vcardBtn;
+
+      const list = document.getElementById('offer-list');
+      list.innerHTML = "";
+      t.offers.forEach(off => {
+        const li = document.createElement('li');
+        li.innerText = off;
+        list.appendChild(li);
+      });
+    }
+  </script>
 </body>
 </html>
