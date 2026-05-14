@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERGOPROXY - Aleksander Grzybowski</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .language-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .overlay {
+      padding: 5vw;
+      width: 90%;
+      max-width: 800px;
+      box-sizing: border-box;
+      text-align: center;
+      border-radius: 10px;
+    }
+    h1 {
+      font-size: 5vw;
+      margin: 0;
+    }
+    p {
+      font-size: 1.5vw;
+      margin: 10px 0;
+    }
+    .contact, .about {
+      margin-top: 30px;
+      font-size: 1.2vw;
+      line-height: 1.6;
+      background: none;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+    .contact-section, .about-section {
+      display: none;
+      margin-top: 20px;
+    }
+    .show-contact, .show-about {
+      display: block;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.2vw;
+      border: none;
+      border-radius: 5px;
+      background-color: #ffffffcc;
+      color: #333;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    button:hover {
+      background-color: #ffffffee;
+    }
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      p, .contact, .about, button {
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .overlay {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      p, .contact, .about, button {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+  <script>
+    function toggleContact() {
+      const section = document.getElementById('contact-section');
+      section.classList.toggle('show-contact');
+    }
+    function toggleAbout() {
+      const section = document.getElementById('about-section');
+      section.classList.toggle('show-about');
+    }
+    function toggleLanguage() {
+      const plTexts = {
+        title: "ERGOPROXY",
+        subtitle: "Efektywność energetyczna",
+        aboutBtn: "O firmie",
+        about1: "Efektywność energetyczna to nie tylko sposób na zmniejszenie kosztów operacyjnych, ale również realny wkład w ochronę środowiska. W ERGOPROXY wierzymy, że nowoczesne podejście do zużycia energii może iść w parze z troską o naszą planetę.",
+        about2: "Poprzez racjonalne zarządzanie zasobami i wdrażanie sprawdzonych rozwiązań pomagamy naszym klientom nie tylko oszczędzać, ale także działać odpowiedzialnie. Warto inwestować w efektywność – dla siebie i przyszłych pokoleń.",
+        contactBtn: "Kontakt"
+      };
+      const enTexts = {
+        title: "ERGOPROXY",
+        subtitle: "Energy Efficiency",
+        aboutBtn: "About Us",
+        about1: "Energy efficiency is not only a way to reduce operating costs, but also a real contribution to environmental protection. At ERGOPROXY, we believe that a modern approach to energy use can go hand in hand with caring for our planet.",
+        about2: "Through rational resource management and proven solutions, we help our clients not only save money but also act responsibly. It's worth investing in efficiency – for ourselves and future generations.",
+        contactBtn: "Contact"
+      };
+      const currentLang = document.documentElement.lang;
+      const newLang = currentLang === 'pl' ? 'en' : 'pl';
+      const t = newLang === 'pl' ? plTexts : enTexts;
+
+      document.documentElement.lang = newLang;
+      document.getElementById('main-title').innerText = t.title;
+      document.getElementById('main-subtitle').innerText = t.subtitle;
+      document.getElementById('about-btn').innerText = t.aboutBtn;
+      document.getElementById('about1').innerText = t.about1;
+      document.getElementById('about2').innerText = t.about2;
+      document.getElementById('contact-btn').innerText = t.contactBtn;
+    }
+  </script>
+</head>
+<body>
+  <div class="language-toggle">
+    <button onclick="toggleLanguage()">PL/EN</button>
+  </div>
+  <div class="overlay">
+    <h1 id="main-title">ERGOPROXY</h1>
+    <p id="main-subtitle">Efektywność energetyczna</p>
+
+    <button id="about-btn" onclick="toggleAbout()">O firmie</button>
+    <div id="about-section" class="about-section">
+      <div class="about">
+        <p id="about1">Efektywność energetyczna to nie tylko sposób na zmniejszenie kosztów operacyjnych, ale również realny wkład w ochronę środowiska. W ERGOPROXY wierzymy, że nowoczesne podejście do zużycia energii może iść w parze z troską o naszą planetę.</p>
+        <p id="about2">Poprzez racjonalne zarządzanie zasobami i wdrażanie sprawdzonych rozwiązań pomagamy naszym klientom nie tylko oszczędzać, ale także działać odpowiedzialnie. Warto inwestować w efektywność – dla siebie i przyszłych pokoleń.</p>
+      </div>
+    </div>
+
+    <button id="contact-btn" onclick="toggleContact()">Kontakt</button>
+    <div id="contact-section" class="contact-section">
+      <div class="contact">
+        <p><strong>Ergoproxy Aleksander Grzybowski</strong></p>
+        <p>agrzybowski@ergoproxy.com.pl</p>
+        <p>+48 512 293 163</p>
+        <p>ul. Joachima Lelewela 17</p>
+        <p>41-711 Ruda Śląska</p>
+        <p>NIP: 6412300559</p>
+        <p>REGON: 542060896</p>
+        <p>D-U-N-S: 665806581</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
